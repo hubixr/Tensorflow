@@ -4,7 +4,7 @@ from tensorflow.keras.models import Model
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+# os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 # Parametry sieci
 image_size = 128
 wavelength = 2.14e-3  # w metrach (140 GHz)
