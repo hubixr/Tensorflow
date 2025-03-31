@@ -1,8 +1,8 @@
 import tensorflow as tf
 import time
-# gpus = tf.config.experimental.list_physical_devices('GPU')
-# for gpu in gpus:
-#     tf.config.experimental.set_memory_growth(gpu, True)
+gpus = tf.config.experimental.list_physical_devices('GPU')
+for gpu in gpus:
+    tf.config.experimental.set_memory_growth(gpu, True)
 
 # Check if TensorFlow sees the GPU
 print("TensorFlow version:", tf.__version__)
@@ -13,13 +13,13 @@ shape = (5000, 5000)
 a = tf.random.normal(shape)
 b = tf.random.normal(shape)
 
-# Time execution on GPU
-# with tf.device('/GPU:0'):
-#     print("Running on GPU...")
-#     start_time = time.time()
-#     c = tf.matmul(a, b)
-#     tf.print("Matrix multiplication (GPU) done.")
-#     print("Execution time (GPU):", time.time() - start_time, "seconds")
+#Time execution on GPU
+with tf.device('/GPU:0'):
+    print("Running on GPU...")
+    start_time = time.time()
+    c = tf.matmul(a, b)
+    tf.print("Matrix multiplication (GPU) done.")
+    print("Execution time (GPU):", time.time() - start_time, "seconds")
 
 # Time execution on CPU for comparison
 with tf.device('/CPU:0'):
