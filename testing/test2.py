@@ -5,6 +5,8 @@ from tensorflow.keras.datasets import fashion_mnist
 
 # The data has already been sorted into training and test sets for us
 (train_data, train_labels), (test_data, test_labels) = fashion_mnist.load_data()
+train_data = tf.data.Dataset.from_tensor_slices((train_data, train_labels))
+train_data = train_data.batch(1024).prefetch(tf.data.AUTOTUNE)
 #normalize the data
 train_data = train_data / 255.0
 test_data = test_data / 255.0
