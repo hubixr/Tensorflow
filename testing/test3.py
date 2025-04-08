@@ -74,16 +74,19 @@ def create_model(input_shape=(IMG_SIZE, IMG_SIZE, 3), num_classes=NUM_CLASSES):
                      activation='relu', input_shape=input_shape),
         layers.BatchNormalization(),
         layers.MaxPooling2D((3, 3), strides=2),
-        
-        # Convolutional blocks
-        *[conv_block(filters) for filters in [64, 128, 256, 512]],
-        
-        # Classification head
-        layers.GlobalAveragePooling2D(),
-        layers.Dense(1024, activation='relu'),
-        layers.Dropout(0.2),
-        layers.Dense(num_classes, activation='softmax', dtype='float32')
     ])
+    
+    # Add convolutional blocks by unpacking each layer list
+    for filters in [64, 128, 256, 512]:
+        for layer in conv_block(filters):
+            model.add(layer)
+        
+    # Classification head
+    model.add(layers.GlobalAveragePooling2D())
+    model.add(layers.Dense(1024, activation='relu'))
+    model.add(layers.Dropout(0.2))
+    model.add(layers.Dense(num_classes, activation='softmax', dtype='float32'))
+    
     return model
 
 def conv_block(filters):
